@@ -24,7 +24,7 @@ include("../config/config.php");
         </header>
 
     <main>
-        
+        <a href="admincp.php?pg=novouser">Cadastrar novo Usuario</a>
     </main>
 
 
