@@ -1,5 +1,5 @@
 <?php 
-include("config/config.php");
+include("../config/config.php");
 $pg = $_GET["pg"];
 ?>
 <!doctype html>
@@ -32,34 +32,35 @@ $pg = $_GET["pg"];
               <div class="row justify-content-center">
               <div class="col-md-4">
               <label class="form-label">Nome:</label>
-              <input type="text" class="form-control" id="nome"/><br>
+              <input type="text" name="nome" class="form-control" id="nome"/><br>
               </div>
               </div>
 
               <div class="row justify-content-center">
               <div class="col-md-4">
               <label class="form-label">Senha:</label>
-              <input type="password" class="form-control" id="senha"/><br>
+              <input type="password" name="senha" class="form-control" id="senha"/><br>
               </div>
               </div>
               <button type="submit" class="btn btn-primary">Enviar</button>
         <?php
             }elseif ($pg == "novouserok") {
-                
               $nome = $_POST["nome"];
               $senha = $_POST["senha"];
               
-              if (isset($nome, $senha)) {
+              if (empty($nome AND $senha)) {
+
                 echo "Digite um usuario e senha";
-              
-               echo var_dump($nome, $senha);
+              }else{
+              echo var_dump($nome, $senha);
+
               $stmt = "INSERT INTO usuarios(nome,senha) VALUES(:nome,:senha)";
               $resul = $pdo->prepare($stmt);
-              $resul->bindParam(":nome","$nome");
-              $resul->bindParam(":senha", "$senha");
+              $resul->bindParam(':nome',$nome);
+              $resul->bindParam(':senha',$senha);
               $resul->execute();
-              
-              if ($resul->rowCount() >= 1) {
+
+              if($resul->rowCount() >= 1) {;
                 echo "Usuario cadastrado!";
               }else {
                 echo "Ocorreu algum erro!";
