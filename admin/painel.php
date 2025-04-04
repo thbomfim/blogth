@@ -32,7 +32,8 @@ include("../config/config.php");
             exit;
           }
         ?>
-        <a href="admincp.php?pg=novouser">Cadastrar novo Usuario</a>
+        <a href="admincp.php?pg=novouser">Cadastrar novo Usuario</a><br>
+        <a href="admincp.php?pg=newpost">Novo Post</a>
     </main>
 
 
