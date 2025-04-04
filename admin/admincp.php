@@ -31,45 +31,88 @@ $pg = $_GET["pg"];
             if ($pg == "novouser") {
                 
             ?>
-            <br>
-            <form action="?pg=novouserok" method="post">
-                <div class="row justify-content-center">
-                    <div class="col-md-4">
-                        <label class="form-label">Nome:</label>
-                        <input type="text" name="nome" class="form-control" id="nome" /><br>
+                <br>
+                <form action="?pg=novouserok" method="post">
+                    <div class="row justify-content-center">
+                        <div class="col-md-4">
+                            <label class="form-label">Nome:</label>
+                            <input type="text" name="nome" class="form-control" id="nome" /><br>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row justify-content-center">
-                    <div class="col-md-4">
-                        <label class="form-label">Senha:</label>
-                        <input type="password" name="senha" class="form-control" id="senha" /><br>
+                    <div class="row justify-content-center">
+                        <div class="col-md-4">
+                            <label class="form-label">Senha:</label>
+                            <input type="password" name="senha" class="form-control" id="senha" /><br>
+                        </div>
                     </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Enviar</button>
-                <?php
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+            <?php
             }elseif ($pg == "novouserok") {
-              $nome = $_POST["nome"];
-              $senha = $_POST["senha"];
+                $nome = $_POST["nome"];
+                $senha = $_POST["senha"];
               
-              if (empty($nome AND $senha)) {
+                if (empty($nome AND $senha)) {
 
                 echo "Digite um usuario e senha";
+                exit;
               }else{
-              echo var_dump($nome, $senha);
+                  echo var_dump($nome, $senha);
 
-              $stmt = "INSERT INTO usuarios(nome,senha) VALUES(:nome,:senha)";
-              $resul = $pdo->prepare($stmt);
-              $resul->bindParam(':nome',$nome);
-              $resul->bindParam(':senha',$senha);
-              $resul->execute();
+                  $stmt = "INSERT INTO usuarios(nome,senha) VALUES(:nome,:senha)";
+                  $resul = $pdo->prepare($stmt);
+                  $resul->bindParam(':nome',$nome);
+                  $resul->bindParam(':senha',$senha);
+                  $resul->execute();
 
-              if($resul->rowCount() >= 1) {;
-                echo "Usuario cadastrado!";
-              }else {
-                echo "Ocorreu algum erro!";
+                  if($resul->rowCount() >= 1) {
+                      echo "Usuario cadastrado!";
+                    }else {
+                      echo "Ocorreu algum erro!";
+                    }
+                }
+            }elseif($pg == "newpost") {
+            ?>
+                <h2>Adicionar um novo Post</h2><br>
+                <form action="?pg=newpostok" method="post">
+                    <div class="row justify-content-center">
+                        <div class="col-md-4">
+                            <label class="form-label">Titulo:</label>
+                            <input type="text" name="titulo" class="form-control" id="titulo" /><br>
+                        </div>
+                    </div>
+                    
+                    <div class="row justify-content-center">
+                        <div class="col-md-4">
+                            <label class="form-label">post:</label>
+                            <textarea name="post" class="form-control" id="post" row="5" placeholder="Seu post aqui!"></textarea><br>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+        <?php
+          }elseif($pg == "newpostok") {
+              
+              $titulo = $_POST["titulo"];
+              $post = $_POST["post"];
+              
+              if(empty($titulo AND $post)) {
+                  echo "É preciso digitar o titulo e o post";
+                  exit;
+              }else{
+                  //$data = date('Y-m-d');
+                  $stmt = "INSERT INTO posts(titulo,post,data) VALUES( :titulo, :post, NOW())";
+                  $resul = $pdo->prepare($stmt);
+                  $resul->bindParam(':titulo', $titulo);
+                  $resul->bindParam(':post', $post);
+                  
+                  if($resul->execute()) { 
+                      echo "Post Adicionado";
+                  }else{
+                      $erro = $resul->errorinfo();
+                      echo "Ocorreu algum erro!" . $erro[2];
+                  }
               }
-            }
           }
         ?>
         </main>
