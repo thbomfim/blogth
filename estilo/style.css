@@ -1,20 +1,38 @@
-@font-face {
+ @font-face {
     font-family: Boldonse;
-    src: url(fonts/Boldonse-Regular.ttf)
+    src: url(fonts/Boldonse-Regular.ttf);
+  }
+  @font-face {
+      font-family: Outfit;
+      src: url(fonts/Outfit.ttf);
+  }
+  
+  body {
+      font-family: 'Outfit';
   }
   
   #logo{
-    font-family: Boldonse;
+        font-family: Boldonse;
         border-bottom: .5rem solid #3c05ff;
-        border-top: .5rem solid #52c196;
+        border-top: .5rem solid #3c05ff;
         margin-bottom: 1.80rem;
         margin-top: 1.80rem;
         padding: 1.2rem 0;
       }
+      
+   .data {
+      font-size: 12px;
+      color: #E8E8E8;
+  }
 
       nav.menu {
         background-color:#575153;
         display:flex;
         justify-content:space-evenly;
-        padding:6px 0
+        padding:6px 0;
+      }
+      
+      a { 
+      text-decoration: none;  
+      color: #1E90FF;
       }
