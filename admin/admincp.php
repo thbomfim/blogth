@@ -100,10 +100,18 @@ $pg = $_GET["pg"];
                   echo "É preciso digitar o titulo e o post";
                   exit;
               }else{
-                  //$data = date('Y-m-d');
-                  $stmt = "INSERT INTO posts(titulo,post,data) VALUES( :titulo, :post, NOW())";
+                  $posPonto = strpos($post, '.');
+                  
+                  if ($posPonto !== false) {
+                      $intro = substr($post, 0, $posPonto + 1);
+                  }else{
+                      $intro = substr($post, 0, 150);
+                      $intro = substr($intro, 0, strrpos($intro, ''));
+                  }
+                  $stmt = "INSERT INTO posts(titulo,intro,post,data) VALUES( :titulo, :intro, :post, NOW())";
                   $resul = $pdo->prepare($stmt);
                   $resul->bindParam(':titulo', $titulo);
+                  $resul->bindParam(':intro', $intro);
                   $resul->bindParam(':post', $post);
                   
                   if($resul->execute()) { 
