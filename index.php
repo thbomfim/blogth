@@ -41,7 +41,7 @@ include("config/config.php");
             // Mostrar os posts
             while($info = $postagem->fetch()){
                 ?>
-                <a href="#" class="mb-4">
+                <a href="post.php?pg=post&id=<?=$info['id']?>" class="mb-4">
                     <h2><?= $info['titulo'] ?></h2>
                      <?= $info['intro'] ?></a>
                     <div class="data"><?= $info['data'] ?></div></br>
