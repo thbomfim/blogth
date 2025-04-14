@@ -15,7 +15,7 @@ $pg = $_GET['pg'] ?? '';
 </head>
 
 <body>
-    <div class="container-sm text-center">
+    <div class="container-md text-center">
 
         <header>
             <h1 id="logo">Blog do TH</h1>
@@ -37,7 +37,9 @@ $pg = $_GET['pg'] ?? '';
             $stmt->execute();
             $post = $stmt->fetch();
             
-            var_dump($post['post']);
+            echo "<h1>$post[titulo]</h1>";
+            echo "<small>$post[data]</samll>";
+            echo "<p>$post[texto]</p>";
         
         }
         ?>
