@@ -6,33 +6,56 @@
       font-family: Outfit;
       src: url(fonts/Outfit.ttf);
   }
-  
-  body {
-      font-family: 'Outfit';
-  }
-  
-  #logo{
-        font-family: Boldonse;
-        border-bottom: .5rem solid #3c05ff;
-        border-top: .5rem solid #3c05ff;
-        margin-bottom: 1.80rem;
-        margin-top: 1.80rem;
-        padding: 1.2rem 0;
-      }
-      
-   .data {
-      font-size: 12px;
-      color: #E8E8E8;
+
+  html, body {
+    font-family: 'Outfit';
+    height: 100%;
+    margin: 0;
   }
 
-      nav.menu {
-        background-color:#575153;
-        display:flex;
-        justify-content:space-evenly;
-        padding:6px 0;
-      }
-      
-      a { 
-      text-decoration: none;  
-      color: #1E90FF;
-      }
+  .pagina {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  main {
+    flex: 1;
+  }
+
+  footer {
+    background-color: #212529;
+    color: #fff;
+    padding: 20px 0;
+  }
+
+  #logo {
+    font-family: Boldonse;
+    border-bottom: .5rem solid #3c05ff;
+    border-top: .5rem solid #3c05ff;
+    margin-bottom: 1.80rem;
+    margin-top: 1.80rem;
+    padding: 1.2rem 0;
+  }
+
+  .data {
+    font-size: 12px;
+    color: #E8E8E8;
+  }
+
+  nav.menu {
+    background-color: #575153;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 6px 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: #1E90FF;
+  }
+
+  .meu-container {
+    max-width: 720px;
+    margin: 0 auto;
+  }

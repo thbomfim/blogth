@@ -26,8 +26,12 @@ $pg = $_GET["pg"];
             </nav>
         </header>
 
-        <main>
-            <?php 
+            <?php
+            if(!isset($_SESSION["id"])) {
+              echo "Você não esta logado!";
+              echo "<a href=\"index.php\">Entre novamente aqui!</a>";
+              exit;
+            } 
             if ($pg == "novouser") {
                 
             ?>

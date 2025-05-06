@@ -14,19 +14,22 @@ include("config/config.php");
 </head>
 
 <body>
-    <div class="container-sm text-center">
+    <div class="pagina">
+        <header class="text-center">
+            <div class="container-md meu-container">
 
-        <header>
-            <h1 id="logo">Blog do TH</h1>
-            <nav class="menu">
-                <a>Home</a>
-                <a>Sobre min</a>
-                <a>Socias</a>
-            </nav>
+                <h1 id="logo">Blog do TH</h1>
+                <nav class="menu">
+                    <a>Home</a>
+                    <a>Sobre min</a>
+                    <a>Socias</a>
+                </nav>
+            </div>
         </header>
 
         <main>
-            <?php
+            <div class="container-md text-center meu-container">
+                <?php
             $limite = 10;
             $pagina = isset($_GET['pagina']) && (int)$_GET['pagina'] >= 0 ? (int)$_GET['pagina'] : 0;
             $offset = $pagina * $limite;
@@ -43,22 +46,23 @@ include("config/config.php");
                 ?>
                 <a href="post.php?pg=post&id=<?=$info['id']?>" class="mb-4">
                     <h2><?= $info['titulo'] ?></h2>
-                     <?= $info['intro'] ?></a>
-                    <div class="data"><?= $info['data'] ?></div></br>
+                    <?= $info['intro'] ?>
+                </a>
+                <div class="data"><?= $info['data'] ?></div></br>
                 <?php
             }
             ?>
-            
-            <!-- Paginação com reticências -->
-            <nav aria-label="Navegação de página">
-              <ul class="pagination justify-content-center">
-                
-                <!-- Anterior -->
-                <li class="page-item <?= ($pagina <= 0) ? 'disabled' : '' ?>">
-                  <a class="page-link" href="?pagina=<?= $pagina - 1 ?>">Anterior</a>
-                </li>
-            
-                <?php
+
+                <!-- Paginação com reticências -->
+                <nav aria-label="Navegação de página">
+                    <ul class="pagination justify-content-center">
+
+                        <!-- Anterior -->
+                        <li class="page-item <?= ($pagina <= 0) ? 'disabled' : '' ?>">
+                            <a class="page-link" href="?pagina=<?= $pagina - 1 ?>">Anterior</a>
+                        </li>
+
+                        <?php
                 $mostrarPaginas = 2; // Quantas páginas antes/depois da atual mostrar
             
                 for ($i = 0; $i < $totalPaginas; $i++) {
@@ -81,16 +85,22 @@ include("config/config.php");
                     }
                 }
                 ?>
-            
-                <!-- Próxima -->
-                <li class="page-item <?= ($pagina + 1 >= $totalPaginas) ? 'disabled' : '' ?>">
-                  <a class="page-link" href="?pagina=<?= $pagina + 1 ?>">Próxima</a>
-                </li>
-            
-              </ul>
-            </nav>
 
+                        <!-- Próxima -->
+                        <li class="page-item <?= ($pagina + 1 >= $totalPaginas) ? 'disabled' : '' ?>">
+                            <a class="page-link" href="?pagina=<?= $pagina + 1 ?>">Próxima</a>
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
         </main>
+
+        <footer class="text-center">
+            <div class="container">
+                <p class="mb-0">© 2025 Blog do TH - Todos os direitos reservados.</p>
+            </div>
+        </footer>
 
 
     </div>
@@ -98,4 +108,5 @@ include("config/config.php");
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
 </body>
+
 </html>
