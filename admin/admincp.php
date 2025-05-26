@@ -1,5 +1,7 @@
 <?php 
+session_start();
 include("../config/config.php");
+include("../config/function.php");
 $pg = $_GET["pg"];
 ?>
 <!doctype html>
@@ -80,6 +82,7 @@ $pg = $_GET["pg"];
                 <h2>Adicionar um novo Post</h2><br>
                 <form action="?pg=newpostok" method="post">
                     <div class="row justify-content-center">
+                        <?=var_dump(nameUser())?>
                         <div class="col-md-4">
                             <label class="form-label">Titulo:</label>
                             <input type="text" name="titulo" class="form-control" id="titulo" /><br>
@@ -91,6 +94,7 @@ $pg = $_GET["pg"];
                             <label class="form-label">post:</label>
                             <textarea name="post" class="form-control" id="post" row="5" placeholder="Seu post aqui!"></textarea><br>
                         </div>
+                        <input type="hidden" name="author" value="<?=nameUser()?>">
                     </div>
                     
                     <button type="submit" class="btn btn-primary">Enviar</button>
@@ -99,6 +103,7 @@ $pg = $_GET["pg"];
               
               $titulo = $_POST["titulo"];
               $post = $_POST["post"];
+              $author = $_POST["author"];
               
               if(empty($titulo AND $post)) {
                   echo "É preciso digitar o titulo e o post";
@@ -112,14 +117,15 @@ $pg = $_GET["pg"];
                       $intro = substr($post, 0, 150);
                       $intro = substr($intro, 0, strrpos($intro, ''));
                   }
-                  $stmt = "INSERT INTO posts(titulo,intro,texto,data) VALUES( :titulo, :intro, :post, NOW())";
+                  $stmt = "INSERT INTO posts(author,titulo,intro,texto,data) VALUES( :author, :titulo, :intro, :post, NOW())";
                   $resul = $pdo->prepare($stmt);
+                  $resul->bindParam(':author', $author);
                   $resul->bindParam(':titulo', $titulo);
                   $resul->bindParam(':intro', $intro);
                   $resul->bindParam(':post', $post);
                   
                   if($resul->execute()) { 
-                      echo "Post Adicionado";
+                      echo "Post Adicionado!";
                   }else{
                       $erro = $resul->errorinfo();
                       echo "Ocorreu algum erro!" . $erro[2];
