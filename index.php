@@ -48,7 +48,7 @@ include("config/config.php");
                     <h2><?= $info['titulo'] ?></h2>
                     <?= $info['intro'] ?>
                 </a>
-                <div class="data"><?= $info['data'] ?></div></br>
+                <div class="data"><?php echo" $info[author] &nbsp; $info[data]"; ?></div></br>
                 <?php
             }
             ?>
@@ -96,9 +96,9 @@ include("config/config.php");
             </div>
         </main>
 
-        <footer class="text-center">
-            <div class="container">
-                <p class="mb-0">© 2025 Blog do TH - Todos os direitos reservados.</p>
+        <footer>
+            <div class="container-md meu-container">
+                <p class="mb-0 text-center">© 2025 Blog do TH - Todos os direitos reservados.</p>
             </div>
         </footer>
 
