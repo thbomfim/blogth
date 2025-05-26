@@ -40,9 +40,12 @@ $pg = $_GET['pg'] ?? '';
           $stmt->execute();
           $post = $stmt->fetch();
 
-          echo "<h1>$post[titulo]</h1>";
-          echo "<small class='data'>$post[data]</small>";
-          echo "<p>$post[texto]</p>";
+          echo "<br><h1>$post[titulo]</h1>";
+          echo "<br><h3>$post[intro]</h3>";
+          echo "<br><blockquote class=\"author\">$post[author] $post[data]</blockquote>";
+        echo" </div>";
+        echo "<div class=\"container-md meu-container\">";
+          echo "<p class=\"capitalize\">$post[texto]</p>";
         } else {
           echo "<p>Bem-vindo ao Blog do TH! Selecione um post para começar.</p>";
         }
@@ -50,9 +53,9 @@ $pg = $_GET['pg'] ?? '';
             </div>
         </main>
 
-        <footer class="text-center">
-            <div class="container">
-                <p class="mb-0">© 2025 Blog do TH - Todos os direitos reservados.</p>
+        <footer>
+            <div class="container-md meu-container">
+                <div class="mb-0 text-center">&copy 2025 Blog do TH - Todos os direitos reservados.</div>
             </div>
         </footer>
 
