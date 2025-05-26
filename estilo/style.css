@@ -12,7 +12,15 @@
     height: 100%;
     margin: 0;
   }
-
+  p {
+    font-size: 18px;
+    text-align: justify;
+    text-indent: 50px;
+  }
+  p::first-letter {
+  text-transform: capitalize; /* Ou text-transform: capitalize; */
+  /* Outras propriedades de estilo para a primeira letra (opcional) */
+}
   .pagina {
     display: flex;
     flex-direction: column;
@@ -58,4 +66,8 @@
   .meu-container {
     max-width: 720px;
     margin: 0 auto;
+  }
+
+  .author {
+    color: aquamarine;
   }
