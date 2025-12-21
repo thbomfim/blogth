@@ -17,7 +17,6 @@ include("config/config.php");
     <div class="pagina">
         <header class="text-center">
             <div class="container-md meu-container">
-
                 <h1 id="logo">Blog do TH</h1>
                 <nav class="menu">
                     <a>Home</a>
@@ -30,19 +29,19 @@ include("config/config.php");
         <main>
             <div class="container-md text-center meu-container">
                 <?php
-            $limite = 10;
-            $pagina = isset($_GET['pagina']) && (int)$_GET['pagina'] >= 0 ? (int)$_GET['pagina'] : 0;
-            $offset = $pagina * $limite;
+                    $limite = 10;
+                    $pagina = isset($_GET['pagina']) && (int)$_GET['pagina'] >= 0 ? (int)$_GET['pagina'] : 0;
+                    $offset = $pagina * $limite;
+                    
+                    $totalQuery = $pdo->query('SELECT COUNT(*) FROM posts');
+                    $totalPosts = $totalQuery->fetchColumn();
+                    $totalPaginas = ceil($totalPosts / $limite);
             
-            $totalQuery = $pdo->query('SELECT COUNT(*) FROM posts');
-            $totalPosts = $totalQuery->fetchColumn();
-            $totalPaginas = ceil($totalPosts / $limite);
-            
-            // Buscar posts
-            $postagem = $pdo->query("SELECT * FROM posts ORDER BY id DESC LIMIT $limite OFFSET $offset");
-            
-            // Mostrar os posts
-            while($info = $postagem->fetch()){
+                    // Buscar posts
+                    $postagem = $pdo->query("SELECT * FROM posts ORDER BY id DESC LIMIT $limite OFFSET $offset");
+                    
+                    // Mostrar os posts
+                    while($info = $postagem->fetch()){
                 ?>
                 <a href="post.php?pg=post&id=<?=$info['id']?>" class="mb-4">
                     <h2><?= $info['titulo'] ?></h2>
@@ -50,8 +49,8 @@ include("config/config.php");
                 </a>
                 <div class="data"><?php echo" $info[author] &nbsp; $info[data]"; ?></div></br>
                 <?php
-            }
-            ?>
+                    }
+                ?>
 
                 <!-- Paginação com reticências -->
                 <nav aria-label="Navegação de página">
