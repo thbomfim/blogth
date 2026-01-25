@@ -1,6 +1,5 @@
 <?php
 include("config/config.php");
-$pg = $_GET['pg'] ?? '';
 ?>
 <!doctype html>
 <html lang="pt-br" data-bs-theme="dark">
@@ -42,15 +41,16 @@ $pg = $_GET['pg'] ?? '';
 
           echo "<br><h1>$post[titulo]</h1>";
           echo "<br><h3>$post[intro]</h3>";
-          echo "<br><blockquote class=\"author\">$post[author] $post[data]</blockquote>";
+          echo "<br><blockquote class=\"author\">$post[autor] $post[dataCriado]</blockquote>";
         echo" </div>";
         echo "<div class=\"container-md meu-container\">";
-          echo "<p class=\"capitalize\">$post[texto]</p>";
+          echo "<p class=\"capitalize\">$post[conteudo]</p>";
         } else {
           echo "<p>Bem-vindo ao Blog do TH! Selecione um post para começar.</p>";
         }
         ?>
-            </div>
+        <button type="submit" class="btn btn-primary" onclick="window.history.back()">Voltar</button>
+        </div>
         </main>
 
         <footer>
