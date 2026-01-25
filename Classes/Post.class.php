@@ -36,12 +36,12 @@ class Post{
 
     $dataCriado = date("Y-m-d H:i:s");
     
-    $sql = "INSERT INTO posts (autor, titulo, intro, conteudo, data) VALUES (:autor, :titulo, :intro, :conteudo, :dataCriado)";
+    $sql = "INSERT INTO posts (autor, titulo, intro, conteudo, dataCriado) VALUES (:autor, :titulo, :intro, :conteudo, :dataCriado)";
     $stmt = $this->pdo->prepare($sql);
     $stmt->bindParam(':autor', $autor);
     $stmt->bindParam(':titulo', $titulo);
     $intro = substr($conteudo, 0, 150) . '...'; //gerar uma intro com os primeiros 150 caracteres do conteudo
-    $stmt->bindParam(':intro', $intro)
+    $stmt->bindParam(':intro', $intro);
     $stmt->bindParam(':conteudo', $conteudo);
     $stmt->bindParam(':dataCriado', $dataCriado);
     $result = $stmt->execute();
@@ -105,9 +105,12 @@ class Post{
             return;
         }
 
+        //define a data de modificação
+        $dataModificado = date("Y-m-d H:i:s");
+
         //faz o update no post
         $conteudo = $_POST["conteudo"];
-        $sql = "UPDATE post SET titulo = ?, intro = ?, conteudo = ?, dataModificado = ? WHERE id = ?";
+        $sql = "UPDATE posts SET titulo = ?, intro = ?, conteudo = ?, dataModificado = ? WHERE id = ?";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam("?", $titulo);
         $stmt->bindParam("?", $intro);
@@ -238,6 +241,15 @@ class Post{
 
         echo "$result";
         return;
+    }
+    
+    public function listarPosts() {
+        $sql = "SELECT id, titulo, autor, intro, dataCriado FROM posts ORDER BY id DESC";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $posts;
     }
 
 }
