@@ -16,7 +16,7 @@ date_default_timezone_set("America/Sao_Paulo");
   */
   try
   { 
-    $pdo = new PDO("mysql:host=localhost;dbname=blogth", "root", "th123");
+    $pdo = new PDO("mysql:host=localhost;dbname=blogth", "root", "");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
     $conectando = True;
