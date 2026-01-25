@@ -2,7 +2,8 @@
 session_start();
 include("../config/config.php");
 include("../config/function.php");
-$pg = $_GET["pg"];
+include("../Classes/Usuario.class..php");
+include("../Classes/Post.class.php");
 ?>
 <!doctype html>
 <html lang="pt-br" data-bs-theme="dark">
@@ -53,36 +54,26 @@ $pg = $_GET["pg"];
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Enviar</button>
+                    <button type="submit" class="btn btn-primary" onclick="window.history.back()">Voltar</button>
             <?php
             }elseif ($pg == "novouserok") {
-                $nome = $_POST["nome"];
-                $senha = $_POST["senha"];
-              
-                if (empty($nome AND $senha)) {
 
-                echo "Digite um usuario e senha";
-                exit;
-              }else{
-                  echo var_dump($nome, $senha);
-
-                  $stmt = "INSERT INTO usuarios(nome,senha) VALUES(:nome,:senha)";
-                  $resul = $pdo->prepare($stmt);
-                  $resul->bindParam(':nome',$nome);
-                  $resul->bindParam(':senha',$senha);
-                  $resul->execute();
-
-                  if($resul->rowCount() >= 1) {
-                      echo "Usuario cadastrado!";
-                    }else {
-                      echo "Ocorreu algum erro!";
-                    }
-                }
+                $Usuario = new Usuario($pdo);
+                $Usuario->registrarUsuario();
+                ?>
+                <button type="submit" class="btn btn-primary" onclick="window.history.back()">Voltar</button>
+                <?php
+            }elseif ($pg == "login") {
+                $Usuario = new Usuario($pdo);
+                $Usuario->autenticarUsuario(
+                    $_POST["usuario"], 
+                    $_POST["senha"]);
+                
             }elseif($pg == "newpost") {
             ?>
                 <h2>Adicionar um novo Post</h2><br>
                 <form action="?pg=newpostok" method="post">
                     <div class="row justify-content-center">
-                        <?=var_dump(nameUser())?>
                         <div class="col-md-4">
                             <label class="form-label">Titulo:</label>
                             <input type="text" name="titulo" class="form-control" id="titulo" /><br>
@@ -92,15 +83,25 @@ $pg = $_GET["pg"];
                     <div class="row justify-content-center">
                         <div class="col-md-4">
                             <label class="form-label">post:</label>
-                            <textarea name="post" class="form-control" id="post" row="5" placeholder="Seu post aqui!"></textarea><br>
+                            <textarea name="conteudo" class="form-control" id="post" row="5" placeholder="Seu post aqui!"></textarea><br>
                         </div>
-                        <input type="hidden" name="author" value="<?=nameUser()?>">
-                    </div>
+                        <?php
+                            $Usuario = new Usuario($pdo);
+                        ?>
+                        <input type="hidden" name="autor" value="<?= $Usuario->nameUser() ?>">
+                        </div>
                     
                     <button type="submit" class="btn btn-primary">Enviar</button>
+                    <button type="submit" class="btn btn-primary" onclick="window.history.back()">Voltar</button>
         <?php
           }elseif($pg == "newpostok") {
-              
+
+            $Post = new Post($pdo);
+            $Post->adicionarPost();
+            ?>
+            <button type="submit" class="btn btn-primary" onclick="window.history.back()">Voltar</button>
+            <?php
+              /*
               $titulo = $_POST["titulo"];
               $post = $_POST["post"];
               $author = $_POST["author"];
@@ -130,7 +131,7 @@ $pg = $_GET["pg"];
                       $erro = $resul->errorinfo();
                       echo "Ocorreu algum erro!" . $erro[2];
                   }
-              }
+              }*/
           }
         ?>
         </main>
