@@ -47,7 +47,7 @@ include("config/config.php");
                     <h2><?= $info['titulo'] ?></h2>
                     <?= $info['intro'] ?>
                 </a>
-                <div class="data"><?php echo" $info[author] &nbsp; $info[data]"; ?></div></br>
+                <div class="data"><?php echo" $info[autor] &nbsp; $info[dataCriado]"; ?></div></br>
                 <?php
                     }
                 ?>
