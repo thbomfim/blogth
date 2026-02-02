@@ -63,12 +63,6 @@ include("../Classes/Post.class.php");
                 ?>
                 <button type="submit" class="btn btn-primary" onclick="window.history.back()">Voltar</button>
                 <?php
-            }elseif ($pg == "login") {
-                $Usuario = new Usuario($pdo);
-                $Usuario->autenticarUsuario(
-                    $_POST["usuario"], 
-                    $_POST["senha"]);
-                
             }elseif($pg == "newpost") {
             ?>
                 <h2>Adicionar um novo Post</h2><br>
@@ -101,37 +95,6 @@ include("../Classes/Post.class.php");
             ?>
             <button type="submit" class="btn btn-primary" onclick="window.history.back()">Voltar</button>
             <?php
-              /*
-              $titulo = $_POST["titulo"];
-              $post = $_POST["post"];
-              $author = $_POST["author"];
-              
-              if(empty($titulo AND $post)) {
-                  echo "É preciso digitar o titulo e o post";
-                  exit;
-              }else{
-                  $posPonto = strpos($post, '.');
-                  
-                  if ($posPonto !== false) {
-                      $intro = substr($post, 0, $posPonto + 1);
-                  }else{
-                      $intro = substr($post, 0, 150);
-                      $intro = substr($intro, 0, strrpos($intro, ''));
-                  }
-                  $stmt = "INSERT INTO posts(author,titulo,intro,texto,data) VALUES( :author, :titulo, :intro, :post, NOW())";
-                  $resul = $pdo->prepare($stmt);
-                  $resul->bindParam(':author', $author);
-                  $resul->bindParam(':titulo', $titulo);
-                  $resul->bindParam(':intro', $intro);
-                  $resul->bindParam(':post', $post);
-                  
-                  if($resul->execute()) { 
-                      echo "Post Adicionado!";
-                  }else{
-                      $erro = $resul->errorinfo();
-                      echo "Ocorreu algum erro!" . $erro[2];
-                  }
-              }*/
           }
         ?>
         </main>
