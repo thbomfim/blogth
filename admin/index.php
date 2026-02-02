@@ -23,7 +23,7 @@ include("../config/config.php");
         <main>
             <h2>Login</h2>
 
-            <form action="admincp.php?pg=login" method="post">
+            <form action="adminlogin.php?pg=login" method="post">
 
                 <div class="row justify-content-center">
                     <div class="col-md-4">
