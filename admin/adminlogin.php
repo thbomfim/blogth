@@ -1,6 +1,6 @@
 <?php
 include("../config/config.php");
-$pg = $_GET["pg"];
+include("../Classes/Usuario.class..php");
 ?>
 <!doctype html>
 <html lang="pt-br" data-bs-theme="dark">
@@ -29,33 +29,10 @@ $pg = $_GET["pg"];
         <main>
             <?php
                 if($pg == "login") {
-
-                    $usuario = $_POST["usuario"];
-                    $senha = $_POST["senha"];
-                    
-                    var_dump($usuario, $senha);
-                    if (empty($usuario AND $senha) ) {
-                        echo "Digite um usuario e senha";
-                    }
-
-                    $sql = "SELECT * FROM usuarios WHERE nome = :nome AND senha = :senha";
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->bindvalue(":nome", $usuario);
-                    $stmt->bindvalue(":senha", $senha);
-                    $stmt->execute();
-
-                    if($stmt->rowCount() >= 1) {
-                        
-                        $usuario = $stmt->fetch();
-                        session_start();
-                        $_SESSION["nome"] = $usuario["usuario"];
-                        $_SESSION["id"] = $usuario["id"];
-                        echo "ola Login realizado com sucesso";
-                        echo "<a href=\"painel.php\">CLIQUE AQUI</a>";
-                        exit;
-                    }else{
-                        echo "Usuario ou senha incorretos";
-                    }   
+                    $Usuario = new Usuario($pdo);
+                    $Usuario->autenticarUsuario(
+                    $_POST["usuario"], 
+                    $_POST["senha"]);
                 }
             ?>
         </main>
