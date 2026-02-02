@@ -5,6 +5,9 @@ class Usuario {
     protected $id;
     protected $nome;
     protected $senha;
+    protected $perm;
+    protected $dataCriado;
+    protected $dataModificado;
     protected $pdo;
 
     public function __construct($dbconnection) {
@@ -22,7 +25,7 @@ class Usuario {
 
         $hashedSenha = password_hash($senha, PASSWORD_BCRYPT);
 
-        $sql = "INSERT INTO usuarios (nome, senha) VALUES (:nome, :senha)";
+        $sql = "INSERT INTO usuarios (nome, senha, perm) VALUES (:nome, :senha, :perm)";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':nome', $nome);
         $stmt->bindParam(':senha', $hashedSenha);
