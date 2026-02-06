@@ -11,6 +11,26 @@ class Post{
     public function __construct($dbconnection) {
         $this->pdo = $dbconnection;
     }
+
+    public function mostrarPost() {
+        $id = $_GET['id'];
+
+        $sql = "SELECT * FROM posts WHERE id = :id";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $post = $stmt->fetch();
+?>
+        <br><h1><?php echo $post['titulo']; ?></h1>
+        <br><h3><?php echo $post['intro']; ?></h3>
+        <br><blockquote class="author"><?php echo $post['autor']; ?> <?php echo $post['dataCriado']; ?></blockquote>
+        </div>
+        <div class="container-md meu-container">
+        <p class="capitalize"><?php echo $post['conteudo']; ?></p>
+        <?php } else { ?>
+        <p>Este post não existe.</p>
+    <?php 
+    }
     
     public function adicionarPost() {
     $titulo = $_POST["titulo"];
@@ -40,7 +60,7 @@ class Post{
     $stmt = $this->pdo->prepare($sql);
     $stmt->bindParam(':autor', $autor);
     $stmt->bindParam(':titulo', $titulo);
-    $intro = substr($conteudo, 0, 150) . '...'; //gerar uma intro com os primeiros 150 caracteres do conteudo
+    $intro = substr($conteudo, 0, 150) . '...'; //gera uma intro com os primeiros 150 caracteres do conteudo
     $stmt->bindParam(':intro', $intro);
     $stmt->bindParam(':conteudo', $conteudo);
     $stmt->bindParam(':dataCriado', $dataCriado);
