@@ -12,6 +12,7 @@
     height: 100%;
     margin: 0;
   }
+
   p {
     font-size: 18px;
     text-align: justify;
@@ -38,6 +39,7 @@
   }
 
   #logo {
+    color: #fff;
     font-family: Boldonse;
     border-bottom: .5rem solid #3c05ff;
     border-top: .5rem solid #3c05ff;
@@ -61,6 +63,10 @@
   a {
     text-decoration: none;
     color: #1E90FF;
+  }
+
+  #logoBranco {
+    color: #fff;
   }
 
   .meu-container {
