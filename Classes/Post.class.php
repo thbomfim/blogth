@@ -10,26 +10,16 @@ class Post{
 
     public function __construct($dbconnection) {
         $this->pdo = $dbconnection;
+        $this->id = $_GET["id"];
     }
 
-    public function mostrarPost() {
-        $id = $_GET['id'];
+    public function limitarTexto($texto, $limite){
+    $texto = substr($texto, 0, strrpos(substr($texto, 0, $limite), ' ')) . '...';
+    return $texto;
+}
 
-        $sql = "SELECT * FROM posts WHERE id = :id";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
-        $post = $stmt->fetch();
-?>
-        <br><h1><?php echo $post['titulo']; ?></h1>
-        <br><h3><?php echo $post['intro']; ?></h3>
-        <br><blockquote class="author"><?php echo $post['autor']; ?> <?php echo $post['dataCriado']; ?></blockquote>
-        </div>
-        <div class="container-md meu-container">
-        <p class="capitalize"><?php echo $post['conteudo']; ?></p>
-        <?php } else { ?>
-        <p>Este post não existe.</p>
-    <?php 
+    public function mostrarPost() {
+        
     }
     
     public function adicionarPost() {
@@ -49,8 +39,8 @@ class Post{
     }elseif(strlen($titulo) < 5) {
         echo "O titulo precisa ter pelo menos 5 caracteres!";
         exit;
-    }elseif(strlen($conteudo) < 50) {
-        echo "O conteudo do post precisa ter pelo menos 50 caracteres!";
+    }elseif(strlen($conteudo) < 150) {
+        echo "O conteudo do post precisa ter pelo menos 150 caracteres!";
         exit;
     }
 
@@ -60,7 +50,9 @@ class Post{
     $stmt = $this->pdo->prepare($sql);
     $stmt->bindParam(':autor', $autor);
     $stmt->bindParam(':titulo', $titulo);
-    $intro = substr($conteudo, 0, 150) . '...'; //gera uma intro com os primeiros 150 caracteres do conteudo
+    // $intro = $this->limitarTexto($conteudo, $limite = 150);
+    //$intro = substr($conteudo, 0, 150) . '...'; //gera uma intro com os primeiros 150 caracteres do conteudo
+    $intro = substr($conteudo, 0, strrpos(substr($conteudo, 0, 150), ' ')) . '...';
     $stmt->bindParam(':intro', $intro);
     $stmt->bindParam(':conteudo', $conteudo);
     $stmt->bindParam(':dataCriado', $dataCriado);
@@ -147,9 +139,9 @@ class Post{
 
     public function mostrarTitulo() {
         //verifica se o post existe
-        $sql = "SELECT id FROM post WHERE id = ?";
+        $sql = "SELECT id FROM posts WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam("?", $id);
+        $stmt->bindParam(":id", $this->id);
         $stmt->execute();
 
         if ($stmt->rowCount() == 0) {
@@ -158,21 +150,42 @@ class Post{
         }
 
         //procura o titulo do post
-        $sql = "SELECT titulo FROM post WHERE id = ?";
+        $sql = "SELECT titulo FROM posts WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam("?", $id);
+        $stmt->bindParam(":id", $this->id);
         $stmt->execute();
         $result = $stmt->fetch();
 
-        echo "$result";
-        return;
+        return $result["titulo"];
+    }
+
+    public function mostrarIntro() {
+        //verifica se o post existe
+        $sql = "SELECT id FROM posts WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(":id", $this->id);
+        $stmt->execute();
+
+        if ($stmt->rowCount() == 0) {
+            echo 'Este post não existe';
+            return;
+        }
+
+        //procura a intro do post
+        $sql = "SELECT intro FROM posts WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(":id", $this->id);
+        $stmt->execute();
+        $result = $stmt->fetch();
+
+        return $result["intro"];
     }
 
     public function mostrarAutor() {
         //verifica se o post existe
-        $sql = "SELECT id FROM post WHERE id = ?";
+        $sql = "SELECT id FROM posts WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam("?", $id);
+        $stmt->bindParam(":id", $this->id);
         $stmt->execute();
 
         if ($stmt->rowCount() == 0) {
@@ -181,21 +194,20 @@ class Post{
         }
 
         //procura o autor do post
-        $sql = "SELECT autor FROM post WHERE id = ?";
+        $sql = "SELECT autor FROM posts WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam("?", $id);
+        $stmt->bindParam(":id", $this->id);
         $stmt->execute();
         $result = $stmt->fetch();
 
-        echo "$result";
-        return;
+        return $result["autor"];
     }
 
     public function mostrarConteudo() {
         //verifica se o post existe
-        $sql = "SELECT id FROM post WHERE id = ?";
+        $sql = "SELECT id FROM posts WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam("?", $id);
+        $stmt->bindParam(":id", $this->id);
         $stmt->execute();
 
         if ($stmt->rowCount() == 0) {
@@ -204,21 +216,20 @@ class Post{
         }
 
         //procura o conteudo do post
-        $sql = "SELECT conteudo FROM post WHERE id = ?";
+        $sql = "SELECT conteudo FROM posts WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam("?", $id);
+        $stmt->bindParam(":id", $this->id);
         $stmt->execute();
         $result = $stmt->fetch();
 
-        echo "$result";
-        return;
+        return $result["conteudo"];
     }
 
     public function mostrarDataCriado() {
         //verifica se o post existe
-        $sql = "SELECT id FROM post WHERE id = ?";
+        $sql = "SELECT id FROM posts WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam("?", $id);
+        $stmt->bindParam(":id", $this->id);
         $stmt->execute();
 
         if ($stmt->rowCount() == 0) {
@@ -227,21 +238,20 @@ class Post{
         }
 
         //procura a data que foi criado o post
-        $sql = "SELECT dataCriado FROM post WHERE id = ?";
+        $sql = "SELECT dataCriado FROM posts WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam("?", $id);
+        $stmt->bindParam(":id", $this->id);
         $stmt->execute();
         $result = $stmt->fetch();
 
-        echo "$result";
-        return;
+        return $result["dataCriado"];
     }
 
     public function mostrarDataModificado() {
         //verifica se o post existe
-        $sql = "SELECT id FROM post WHERE id = ?";
+        $sql = "SELECT id FROM posts WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam("?", $id);
+        $stmt->bindParam(":id", $this->$id);
         $stmt->execute();
 
         if ($stmt->rowCount() == 0) {
@@ -249,18 +259,14 @@ class Post{
             return;
         }
 
-        /**
-         * preciso fazer colocar para puxar a ultima da que foi modificado pois assim nao vai
-         */
         //procura a data que o post foi modificado
-        $sql = "SELECT dataModificado FROM post WHERE id = ?";
+        $sql = "SELECT dataModificado FROM posts WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam("?", $id);
+        $stmt->bindParam(":id", $this->$id);
         $stmt->execute();
         $result = $stmt->fetch();
 
-        echo "$result";
-        return;
+        return $result["dataModificado"];
     }
     
     public function listarPosts() {
