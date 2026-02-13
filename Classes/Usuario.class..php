@@ -53,14 +53,13 @@ class Usuario {
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if($usuario && password_verify($senha, $usuario['senha'])) {
-            echo 'Sucesso! Usuário autenticado!';
             // Aqui você pode iniciar a sessão e armazenar os dados do usuário
             if (session_status() === PHP_SESSION_NONE) {
                 session_start();
             }
             $_SESSION["nome"] = $usuario["nome"];
             $_SESSION["id"] = $usuario["id"];
-            echo "ola Login realizado com sucesso";
+            echo "ola " . $_SESSION["nome"] . ", seu login foi realizado com sucesso!<br>";
             echo "<a href=\"painel.php\">CLIQUE AQUI</a>";
             exit;
         } else {
