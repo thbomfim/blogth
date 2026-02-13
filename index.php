@@ -67,4 +67,4 @@ include("config/config.php");
 
                     </ul>
                 </nav>
-<?= include("footer.html");?>
+<?= include("footer.html") ?>
