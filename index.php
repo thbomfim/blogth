@@ -18,18 +18,19 @@ include("config/config.php");
                     // Mostrar os posts
                     while($info = $postagem->fetch()){
                 ?>
+                <div id="divPost">
                 <a href="post.php?pg=post&id=<?=$info['id']?>" class="mb-4">
                     <h2><?= $info['titulo'] ?></h2>
-                    <?= $info['intro'] ?>
                 </a>
-                <div class="data"><?php echo" $info[autor] &nbsp; $info[dataCriado]"; ?></div></br>
+                    <?= $info['intro'] ?>
+                <div style="margin: 10px 0" class="data"><?php echo" $info[autor] &nbsp; $info[dataCriado]"; ?></div></div>
                 <?php
                     }
                 ?>
 
                 <!-- Paginação com reticências -->
                 <nav aria-label="Navegação de página">
-                    <ul class="pagination justify-content-center">
+                    <ul style="margin: 20px 0" class="pagination justify-content-center">
 
                         <!-- Anterior -->
                         <li class="page-item <?= ($pagina <= 0) ? 'disabled' : '' ?>">
@@ -67,4 +68,4 @@ include("config/config.php");
 
                     </ul>
                 </nav>
-<?= include("footer.html") ?>
+<?php include("footer.html") ?>

@@ -77,3 +77,11 @@
   .author {
     color: aquamarine;
   }
+
+  #divPost {
+    padding: 10px;
+    background-color: #4F4F4F;
+    border-radius: 8px;
+    box-shadow: 0 0 5px #00BFFF;
+    margin: 20px 0 0px 0; 
+  }
